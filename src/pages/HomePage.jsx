@@ -42,7 +42,7 @@ export function HomePage() {
   const showBestSeller = bestSellerProducts.length > 0;
 
   return (
-    <main className="space-y-8 pb-12">
+    <main className="space-y-8 pb-12 overflow-x-hidden">
       <HeroSection waUrl={baseWaUrl} />
 
       <section id="catalog" className="container-page space-y-5 pt-3">

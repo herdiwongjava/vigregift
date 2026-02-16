@@ -47,8 +47,9 @@ export function HorizontalProductStrip({
 
   if (!products?.length) return null;
 
+  
   return (
-    <div className={`rounded-2xl border border-neutral-200 ${backgroundColor} p-4`}>
+    <div className={`overflow-hidden rounded-2xl border border-neutral-200 ${backgroundColor} p-4`}>
       {(title || subtitle) && (
         <div className="mb-3 flex items-center space-x-2">
           <i className={`fa-solid ${iconStyle} text-2xl ${textStyle}`} />

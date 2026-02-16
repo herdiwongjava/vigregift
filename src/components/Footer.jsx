@@ -43,13 +43,17 @@ export function Footer() {
           </a>
           <div className="flex items-center gap-3 text-xs text-neutral-600">
             <a
-              href="#"
+              href="https://www.instagram.com/vigre.galeri?igsh=aGg2eHdnaXNmeHFj"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-200 hover:border-primary-400 hover:text-primary-600"
             >
               <i className="fa-brands fa-instagram text-sm" />
             </a>
             <a
-              href="#"
+              href="https://www.instagram.com/vigre.galeri?igsh=aGg2eHdnaXNmeHFj"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-neutral-200 hover:border-primary-400 hover:text-primary-600"
             >
               <i className="fa-brands fa-tiktok text-sm" />

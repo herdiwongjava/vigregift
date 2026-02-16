@@ -119,8 +119,8 @@ export function HeroSection({ waUrl }) {
       {/* Slider banner seasonal — rekomendasi ukuran gambar: 1200x160px */}
       {slideUrls.length > 0 && (
         <div className="container-page mt-6">
-          <div className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 min-h-[120px] sm:min-h-[140px]">
-            <div className="relative aspect-[1200/160] max-h-40 w-full sm:max-h-44">
+          <div className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 min-h-[120px] sm:min-h-[140px] w-full">
+            <div className="w-full h-full">
               {slideUrls.map((url, i) => (
                 <div
                   key={i}
