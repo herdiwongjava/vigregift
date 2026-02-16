@@ -46,7 +46,7 @@ export function HomePage() {
       <HeroSection waUrl={baseWaUrl} />
 
       <section id="catalog" className="container-page space-y-5 pt-3">
-        
+
         {/* ================= FLASH SALE SECTION ================= */}
         {loading ? (
           <ProductGridSkeleton items={4} />
@@ -63,7 +63,9 @@ export function HomePage() {
                       Koleksi hampers dengan harga spesial untuk momen istimewa. Stok terbatas.
                     </p>
                   </div>
-                  <FlashSaleCountdownDisplay promoDetail={promoDetail} />
+                  <div className='hidden sm:block'>
+                    <FlashSaleCountdownDisplay promoDetail={promoDetail} />
+                  </div>
                 </div>
 
                 <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
@@ -77,6 +79,10 @@ export function HomePage() {
                     iconStyle="fa-medal"
                     showArrows
                   />
+
+                  <div className='lg:hidden'>
+                    <FlashSaleCountdownDisplay promoDetail={promoDetail} />
+                  </div>
 
                   <HorizontalProductStrip
                     products={flashSaleProducts}
@@ -150,7 +156,7 @@ export function HomePage() {
 
         {/* ================= CONTENT AREA ================= */}
         <div className="mt-2 flex flex-col gap-6 md:flex-row">
-          
+
           {/* ===== DESKTOP SIDEBAR ===== */}
           <div className="hidden md:block md:w-64">
             <SidebarFilter

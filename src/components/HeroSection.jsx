@@ -60,7 +60,7 @@ export function HeroSection({ waUrl }) {
           </div>
         </div>
 
-        <div className="relative hidden items-center justify-end lg:flex">
+        <div className="relative flex items-center justify-center lg:justify-end">
           {heroImageUrl ? (
             <div className="relative h-60 w-full max-w-xs overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 shadow-sm">
               <img
