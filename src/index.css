@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans bg-neutral-50 text-neutral-900;
+}
+
+.container-page {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+/* Hero: gambar animasi kecil — ukuran 96x96px (w-24 h-24) */
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float-subtle {
+  animation: float-subtle 3s ease-in-out infinite;
+}
+
+/* Slider banner seasonal — rekomendasi ukuran gambar: 1200x160px (aspect ~7.5:1) */
+
