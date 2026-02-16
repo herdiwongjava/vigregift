@@ -102,7 +102,7 @@ export function HeroSection({ waUrl }) {
           )}
           {animationImageUrl && (
             <div
-              className="absolute -bottom-6 -left-2 z-10 overflow-hidden animate-float-subtle"
+              className="absolute sm:-bottom-6 -left-2 z-10 overflow-hidden animate-float-subtle"
               style={{ width: ANIMATION_IMAGE_SIZE, height: ANIMATION_IMAGE_SIZE }}
             >
               <img

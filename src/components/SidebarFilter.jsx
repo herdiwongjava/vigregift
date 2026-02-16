@@ -26,7 +26,7 @@ export function SidebarFilter({
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold tracking-wide text-neutral-700 uppercase">
-          Filter hampers
+          Filter Hampers
         </p>
         <button
           type="button"
@@ -46,7 +46,7 @@ export function SidebarFilter({
         {/* Kategori */}
         <div>
           <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
-            Kategori acara
+            Kategori
           </p>
           <div className="space-y-1">
             {uniqueCategories?.length ? (
@@ -75,7 +75,7 @@ export function SidebarFilter({
         {/* Jenis */}
         <div>
           <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">
-            Jenis hampers
+            Warna
           </p>
           <div className="space-y-1">
             {uniqueTypes?.length ? (
