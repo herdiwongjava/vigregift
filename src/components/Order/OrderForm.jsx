@@ -45,6 +45,59 @@ export function OrderForm({ onCreated, onFound }) {
     return Math.round((step / steps) * 100);
   }, [step]);
 
+
+  const canGoNext = () => {
+    switch (step) {
+      case 1:
+        return order.name.trim() !== "";
+
+      case 2:
+        return order.ig.trim() !== "";
+
+      case 3:
+        return order.phone.trim().length >= 10;
+
+      case 4:
+        return order.products.length > 0;
+
+      case 5:
+        return !!order.deliveryType;
+
+      case 6:
+        if (order.deliveryType === "pickup") {
+          return order.pickupDate !== "";
+        }
+        return true;
+
+      case 7:
+        if (order.deliveryType === "delivery" && !order.useSeparateAddress) {
+          return (
+            order.deliveryGlobal.date !== "" &&
+            order.deliveryGlobal.address.trim() !== ""
+          );
+        }
+
+        if (order.deliveryType === "delivery" && order.useSeparateAddress) {
+          return order.products.every(
+            (p) =>
+              p.delivery?.date &&
+              p.delivery?.address?.trim() !== ""
+          );
+        }
+        return true;
+
+
+      case 8:
+        return order.dp >= order.total * 0.5;
+
+
+      default:
+        return true;
+    }
+  };
+
+
+
   const next = () => setStep((s) => Math.min(8, s + 1));
   const prev = () => setStep((s) => Math.max(1, s - 1));
 
@@ -74,17 +127,17 @@ export function OrderForm({ onCreated, onFound }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order.products]);
 
-  const getIdOrder = async (orderID) => {
-    console.log('orderID', orderID);
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
-    const resInvoice = await getOrderById(orderID);
-    console.log('resInvoice', resInvoice);
-    if (resInvoice?.status === 'success' && resInvoice.order) {
-      onFound(resInvoice.order);
-    } else {
-      alert('Order tidak ditemukan : ' + orderID);
-    }
-  }
+  // const getIdOrder = async (orderID) => {
+  //   console.log('orderID', orderID);
+  //   // await new Promise((resolve) => setTimeout(resolve, 10000));
+  //   const resInvoice = await getOrderById(orderID);
+  //   console.log('resInvoice', resInvoice);
+  //   if (resInvoice?.status === 'success' && resInvoice.order) {
+  //     onFound(resInvoice.order);
+  //   } else {
+  //     alert('Order tidak ditemukan : ' + orderID);
+  //   }
+  // }
 
 
   const handleSubmit = async () => {
@@ -158,7 +211,18 @@ export function OrderForm({ onCreated, onFound }) {
       {step === 3 && (
         <div>
           <label className="block text-sm font-medium text-neutral-700">Sekalian Nomor WA kakak buat kita saling kordinasi</label>
-          <input value={order.phone} onChange={(e) => update({ phone: e.target.value })} className="mt-2 w-full rounded border px-3 py-2" />
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            onKeyDown={(e) => {
+              if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                e.preventDefault();
+              }
+            }}
+            value={order.phone}
+            onChange={(e) => update({ phone: e.target.value })}
+            className="mt-2 w-full rounded border px-3 py-2" />
         </div>
       )}
 
@@ -281,6 +345,13 @@ export function OrderForm({ onCreated, onFound }) {
           {/* <input type="number" value={order.dp} onChange={(e) => update({ dp: Number(e.target.value) })} className="mt-2 w-full rounded border px-3 py-2" /> */}
           <input
             type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            onKeyDown={(e) => {
+              if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                e.preventDefault();
+              }
+            }}
             value={new Intl.NumberFormat("id-ID").format(order.dp || 0)}
             onChange={(e) => {
               const raw = e.target.value.replace(/\./g, ""); // hapus titik
@@ -288,7 +359,7 @@ export function OrderForm({ onCreated, onFound }) {
             }}
             className="mt-2 w-full rounded border px-3 py-2 text-right"
           />
-          <p className='text-sm italic text-gray-500'>Note : minimal DP 50% ya kak.</p>
+          <p className='text-sm italic pt-3 text-gray-500'>Note : minimal DP 50% / {formatCurrency(order.total * 0.5 || 0)} ya kak.</p>
         </div>
       )}
 
@@ -297,8 +368,8 @@ export function OrderForm({ onCreated, onFound }) {
           {step > 1 && <button onClick={prev} className="rounded-full border px-4 py-2">Previous</button>}
         </div>
         <div>
-          {step < 8 && <button onClick={next} className="rounded-full bg-primary-500 px-4 py-2 text-white">Next</button>}
-          {step === 8 && <button onClick={handleSubmit} disabled={submitting} className="ml-2 rounded-full bg-primary-600 px-4 py-2 text-white">{submitting ? 'Mengirim...' : 'Submit'}</button>}
+          {step < 8 && <button onClick={next} disabled={!canGoNext()} className={`rounded-full bg-primary-500 px-4 py-2 text-white disabled:opacity-40 disabled:cursor-not-allowed`}>Next</button>}
+          {step === 8 && <button onClick={handleSubmit} disabled={submitting || !canGoNext()} className="ml-2 rounded-full bg-primary-600 px-4 py-2 text-white disabled:opacity-40 disabled:cursor-not-allowed">{submitting ? 'Mengirim...' : 'Submit'}</button>}
         </div>
       </div>
     </div>

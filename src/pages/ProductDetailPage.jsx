@@ -77,7 +77,7 @@ export function ProductDetailPage() {
       product.image ? `URL gambar: ${product.image}` : 'URL gambar: -',
       '',
       'Saya sedang melihat halaman detail hampers ini di website.',
-      'Boleh dibantu info detail isi, ketersediaan stok, dan opsi kustomisasi?'
+      'Boleh dibantu info lebih lanjut cara pemesanan atau konsultasi produk ini? Terima kasih'
     ].join('\n')
   );
 

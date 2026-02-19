@@ -22,7 +22,7 @@ function doPost(e) {
     "On Check",              // STATUS_PEMBAYARAN
     data.deliveryType === "pickup" 
       ? data.pickupDate 
-      : data.deliveryGlobal?.date || "",
+      : data.deliveryGlobal?.date || "Per Item",
     "Pending"                // STATUS_ORDER
   ]);
 

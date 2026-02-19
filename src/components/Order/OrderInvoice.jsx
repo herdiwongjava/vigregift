@@ -1,9 +1,14 @@
 import React, { useRef } from 'react';
 import { generateInvoicePdf } from '../../utils/orderPdf';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useMetadata } from '../../context/MetadataContext';
 
 export function OrderInvoice({ orderData }) {
   const containerRef = useRef(null);
+  const { storeDetail } = useMetadata();
+  const phone = (storeDetail?.phoneStore ?? '6285821233817').replace(/\D/g, '');
+
+
 
   const handleDownload = async () => {
     try {
@@ -20,12 +25,45 @@ export function OrderInvoice({ orderData }) {
   // console.log('detail', details);
 
 
+  const waMessage = encodeURIComponent(
+    [
+      'Halo VIGRE GIFT, saya telah melakukan pemesanan: ',
+      '',
+      `No Invoice: *${order[0] || 'Blank'}*`,
+      `Tanggal Pemesanan : ${order[1]?.slice(0, 10) || '-'}`,
+      `Atas Nama: ${order[2] || 'None'}`,
+      '',
+      `Total : ${formatCurrency(order[5] || 0)}`,
+      `DP : *${formatCurrency(order[6] || 0)}*`,
+      `Sisa Pembayaran : ${formatCurrency((order[5] || 0) - (order[6] || 0))}`,
+
+      '',
+      '_Note : Lampirkan Bukti TF disini_',
+      'Berikut bukti transfer untuk pembayaran :',
+       '1. *DP*', 
+       '2. *Pelunasan*',
+      'Silahkan di verifikasi, agar pesanan saya segera di proses. Terima kasih.',
+    ].join('\n')
+  );
+
+  const waLink = `https://wa.me/${phone}?text=${waMessage}`;
+
+
   return (
     <>
       <div className="mb-4 flex items-center justify-start gap-2">
         <button onClick={handleDownload} className="rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white">
           Download Invoice
         </button>
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-primary-600"
+        >
+          <i className="fa-brands fa-whatsapp text-sm" />
+          <span>Kirim Bukti Transfer</span>
+        </a>
       </div>
       <div className="rounded-2xl border border-neutral-200 bg-white overflow-auto p-6">
         {/* <div ref={containerRef} className="prose max-w-none"> */}
@@ -65,6 +103,7 @@ export function OrderInvoice({ orderData }) {
                 <th className="pb-2 text-right">Harga</th>
                 <th className="pb-2 text-right">Total</th>
                 <th className="pb-2 text-center">Alamat Delivery</th>
+                <th className="pb-2 text-right">Tanggal Delivery</th>
               </tr>
             </thead>
             {/* <tbody>
@@ -84,6 +123,7 @@ export function OrderInvoice({ orderData }) {
                   <td className="py-3 text-right">{formatCurrency(d[4] || 0)}</td>
                   <td className="py-3 pl-3 text-right">{formatCurrency((d[3] || 0) * (d[4] || 0))}</td>
                   <td className="py-3 pl-10 text-left">{d[5] || '-'}</td>
+                  <td className="py-3 pl-10 text-right">{d[6]?.slice(0, 10) || '-'}</td>
                 </tr>
               ))}
             </tbody>
