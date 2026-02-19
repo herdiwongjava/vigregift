@@ -172,7 +172,7 @@ export function SidebarFilter({
       </div>
 
       {/* ===== DESKTOP SIDEBAR ===== */}
-      <aside className="sticky top-20 hidden h-fit min-w-[220px] max-h-[calc(100vh-120px)] overflow-y-auto rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm md:block lg:min-w-[240px] xl:min-w-[260px]">
+      <aside className="sticky top-20 hidden h-fit min-w-[220px] rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm md:block lg:min-w-[240px] xl:min-w-[260px]">
         {content}
       </aside>
     </>
