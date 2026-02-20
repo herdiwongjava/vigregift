@@ -20,7 +20,8 @@ export function OrderForm({ onCreated, onFound }) {
     deliveryGlobal: { address: '', date: '' },
     pickupDate: '',
     total: 0,
-    dp: 0
+    dp: 0,
+    image: ""
   });
 
 
@@ -72,7 +73,7 @@ export function OrderForm({ onCreated, onFound }) {
       case 7:
         if (order.deliveryType === "delivery" && !order.useSeparateAddress) {
           return (
-            order.deliveryGlobal.date !== "" &&
+            // order.deliveryGlobal.date !== "" &&
             order.deliveryGlobal.address.trim() !== ""
           );
         }
@@ -80,7 +81,7 @@ export function OrderForm({ onCreated, onFound }) {
         if (order.deliveryType === "delivery" && order.useSeparateAddress) {
           return order.products.every(
             (p) =>
-              p.delivery?.date &&
+              // p.delivery?.date &&
               p.delivery?.address?.trim() !== ""
           );
         }
@@ -104,12 +105,13 @@ export function OrderForm({ onCreated, onFound }) {
   const update = (patch) => setOrder((o) => ({ ...o, ...patch }));
 
   function toggleProductSelection(prod) {
+    // console.log('dari togle', prod);
     setOrder((o) => {
       const exists = o.products.find((p) => p.id === prod.id);
       if (exists) {
         return { ...o, products: o.products.filter((p) => p.id !== prod.id) };
       }
-      return { ...o, products: [...o.products, { id: prod.id, name: prod.name, qty: 1, price: prod.price, delivery: { address: '', date: '' } }] };
+      return { ...o, products: [...o.products, { id: prod.id, name: prod.name, qty: 1, price: prod.price, delivery: { address: '', date: '' }, image: prod.image }] };
     });
   }
 
@@ -139,6 +141,12 @@ export function OrderForm({ onCreated, onFound }) {
   //   }
   // }
 
+  const getDefaultDatePlus7 = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 7);
+
+    return today.toISOString().split("T")[0]; // format YYYY-MM-DD
+  };
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -314,8 +322,8 @@ export function OrderForm({ onCreated, onFound }) {
       {step === 7 && order.deliveryType === 'delivery' && !order.useSeparateAddress && (
         <div>
           <label className="block text-sm font-medium">Isi alamat kirim dan tanggalnya ya kak</label>
-          <input type="date" value={order.deliveryGlobal.date} onChange={(e) => update({ deliveryGlobal: { ...order.deliveryGlobal, date: e.target.value } })} className="mt-2 w-full rounded border px-3 py-2" />
-          <input type="text" value={order.deliveryGlobal.address} onChange={(e) => update({ deliveryGlobal: { ...order.deliveryGlobal, address: e.target.value } })} placeholder="Alamat lengkap" className="mt-2 w-full rounded border px-3 py-2" />
+          <input type="date" value={order.deliveryGlobal.date || getDefaultDatePlus7()} onChange={(e) => update({ deliveryGlobal: { ...order.deliveryGlobal, date: e.target.value } })} className="mt-2 w-full rounded border px-3 py-2" />
+          <input type="text" value={order.deliveryGlobal.address} onChange={(e) => update({ deliveryGlobal: { ...order.deliveryGlobal, address: e.target.value } })} placeholder="Penerima & Alamat lengkap" className="mt-2 w-full rounded border px-3 py-2" />
         </div>
       )}
 
@@ -324,11 +332,50 @@ export function OrderForm({ onCreated, onFound }) {
           <p className="mb-2 text-sm font-medium">Isi alamat kirim dan tanggalnya untuk setiap produk</p>
           <div className="space-y-3">
             {order.products.map((p) => (
-              <div key={p.id} className="rounded border p-3">
-                <p className="font-semibold">{p.name}</p>
-                <input type="date" value={p.delivery?.date || ''} onChange={(e) => setProductDelivery(p.id, 'date', e.target.value)} className="mt-2 w-full rounded border px-3 py-2" />
-                <input type="text" value={p.delivery?.address || ''} onChange={(e) => setProductDelivery(p.id, 'address', e.target.value)} placeholder="Alamat lengkap" className="mt-2 w-full rounded border px-3 py-2" />
+              // <div key={p.id} className="flex gap-3 rounded border p-3">
+              //   <img src={p.image} alt="" className="w-36 rounded object-cover" />
+              //   <div>
+              //     <p className="font-semibold">{p.name}</p>
+              //     <input type="date" value={p.delivery?.date || ''} onChange={(e) => setProductDelivery(p.id, 'date', e.target.value)} className="mt-2 w-full rounded border px-3 py-2" />
+              //     <input type="text" value={p.delivery?.address || ''} onChange={(e) => setProductDelivery(p.id, 'address', e.target.value)} placeholder="Alamat lengkap" className="mt-2 w-full rounded border px-3 py-2" />
+              //   </div>
+              // </div>
+              <div
+                key={p.id}
+                className="flex flex-col md:flex-row gap-4 rounded border p-3"
+              >
+                {/* Gambar */}
+                <img
+                  src={p.image}
+                  alt=""
+                  className="w-full md:w-36 md:h-auto rounded object-cover"
+                />
+
+                {/* Form */}
+                <div className="flex-1">
+                  <p className="font-semibold">{p.name}</p>
+
+                  <input
+                    type="date"
+                    value={p.delivery?.date || getDefaultDatePlus7()}
+                    onChange={(e) =>
+                      setProductDelivery(p.id, 'date', e.target.value)
+                    }
+                    className="mt-2 w-full rounded border px-3 py-2"
+                  />
+
+                  <input
+                    type="text"
+                    value={p.delivery?.address || ''}
+                    onChange={(e) =>
+                      setProductDelivery(p.id, 'address', e.target.value)
+                    }
+                    placeholder="Penerima & Alamat lengkap"
+                    className="mt-2 w-full rounded border px-3 py-2"
+                  />
+                </div>
               </div>
+
             ))}
           </div>
         </div>

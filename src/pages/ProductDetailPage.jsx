@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { useMetadata } from '../context/MetadataContext';
@@ -220,6 +221,10 @@ export function ProductDetailPage() {
                 <i className="fa-brands fa-whatsapp text-sm" />
                 <span>Konsultasi hampers ini via WhatsApp</span>
               </a>
+              <Link to="/order" className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-primary-600">
+                <i className="fa-solid fa-file-invoice text-sm" />
+                <span>Order</span>
+              </Link>
               <button
                 type="button"
                 onClick={handleBack}

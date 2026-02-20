@@ -9,13 +9,19 @@ export function OrderSearch({ onFound }) {
   const handleSearch = async () => {
     setError(null);
     if (!id) return setError('Masukkan nomor order');
+    
+    // Normalisasi ID
+    let formattedId = id.trim();
+    if (!formattedId.toUpperCase().startsWith('ORD-')) {
+      formattedId = `ORD-${formattedId}`;
+    }
     setLoading(true);
     try {
-      const res = await getOrderById(id);
+      const res = await getOrderById(formattedId);
       if (res?.status === 'success' && res.order) {
         onFound(res);
         // console.log('resClient',res);
-        
+
       } else {
         setError('Order tidak ditemukan');
       }
@@ -35,7 +41,7 @@ export function OrderSearch({ onFound }) {
             type="text"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            placeholder="Masukkan nomor order (mis: ORD-... )"
+            placeholder="Masukkan no invoice"
             className="flex-1 rounded-full border border-neutral-200 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary-400"
           />
           <button
