@@ -40,9 +40,10 @@ export function Navbar() {
         <div className="hidden items-center gap-6 text-sm text-neutral-700 md:flex lg:gap-8 xl:gap-10">
           <Link to="/" className="hover:text-primary-600">Home</Link>
           {/* <a href="/" className="hover:text-primary-600">Home</a> */}
-          <a href="#catalog" className="hover:text-primary-600">Katalog</a>
-          <a href="#testimonials" className="hover:text-primary-600">Testimoni</a>
-          <a href="#contact" className="hover:text-primary-600">Kontak</a>
+          <Link to="/#catalog" className="hover:text-primary-600">Katalog</Link>
+          <Link to="/#testimonials" className="hover:text-primary-600">Testimoni</Link>
+          <Link to="/#contact" className="hover:text-primary-600">Kontak</Link>
+          <Link to="/career" className="hover:text-primary-600">Career</Link>
           <Link to="/order" className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-primary-600">
             <i className="fa-solid fa-file-invoice text-sm" />
             <span>Order</span>
@@ -63,9 +64,10 @@ export function Navbar() {
         <div className="border-t border-neutral-200 bg-white md:hidden">
           <div className="container-page flex max-h-[70vh] flex-col gap-2 overflow-y-auto py-3 text-sm text-neutral-700">
             <Link to="/" onClick={() => setOpen(false)} className="py-1">Home</Link>
-            <a href="#catalog" onClick={() => setOpen(false)} className="py-1">Katalog</a>
-            <a href="#testimonials" onClick={() => setOpen(false)} className="py-1">Testimoni</a>
-            <a href="#contact" onClick={() => setOpen(false)} className="py-1">Kontak</a>
+            <Link to="/#catalog" onClick={() => setOpen(false)} className="py-1">Katalog</Link>
+            <Link to="/#testimonials" onClick={() => setOpen(false)} className="py-1">Testimoni</Link>
+            <Link to="/#contact" onClick={() => setOpen(false)} className="py-1">Kontak</Link>
+            <Link to="/career" onClick={() => setOpen(false)} className="py-1">Career</Link>
             <Link to="/order" onClick={() => setOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary-500 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-primary-600">Order</Link>
  
             {/* <a

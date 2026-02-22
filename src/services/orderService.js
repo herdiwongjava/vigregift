@@ -2,9 +2,9 @@ const BASE_URL = import.meta.env.VITE_URL_SPREADSHEET;
 
 export async function createOrder(payload) {
   try {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(`${BASE_URL}?action=postOrder`, {
       method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
+      //   headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     const data = await res.json();
@@ -22,6 +22,11 @@ export async function getOrderById(id) {
     // console.log('getOrder :',res);
     if (!res.ok) throw new Error('Failed to fetch order');
     const data = await res.json();
+
+    // if (!Array.isArray(data)) {
+    //   throw new Error("Format data tidak sesuai");
+    // }
+
     return data;
   } catch (err) {
     console.warn('getOrderById failed', err);
