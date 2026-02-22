@@ -195,7 +195,7 @@ export function ProductDetailPage() {
                 <i className="fa-regular fa-lightbulb text-[12px] text-primary-500" />
                 <div>
                   <p className="font-semibold text-neutral-900">
-                    Insight singkat untuk hampers ini
+                    Jika barang kosong akan diganti dengan barang yang senilai/lebih tinggi sesuai dengan tema hampers
                   </p>
                   {product.preview.highlight && (
                     <p className="text-xs text-neutral-600">{product.preview.highlight}</p>
